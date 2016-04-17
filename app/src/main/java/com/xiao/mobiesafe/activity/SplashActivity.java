@@ -1,15 +1,23 @@
 package com.xiao.mobiesafe.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -21,12 +29,11 @@ import com.xiao.mobiesafe.utils.StreamUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import java.util.logging.LogRecord;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -67,6 +74,54 @@ public class SplashActivity extends AppCompatActivity {
     };
 
     private void showUpdateDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("最新版本" + mVersionName);
+        builder.setMessage(mDes);
+        builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                downloda();
+            }
+        });
+        builder.setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                enterHome();
+            }
+        });
+        builder.show();
+    }
+
+    private void downloda() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            HttpUtils utils = new HttpUtils();
+            String target = Environment.getExternalStorageDirectory()
+                    + "/update.apk";
+            utils.download(mDownloadUrl, target, new RequestCallBack<File>() {
+                public void onSuccess(ResponseInfo<File> responseInfo) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                    intent.setDataAndType(Uri.fromFile(responseInfo.result),
+                            "application/vnd.android.package-archive");
+                    startActivityForResult(intent,0);
+                }
+
+                public void onFailure(HttpException e, String s) {
+                    Toast.makeText(SplashActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
+                    enterHome();
+                }
+            });
+
+        }else{
+            Toast.makeText(this,"没有找到SD卡",Toast.LENGTH_SHORT).show();
+            enterHome();
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        enterHome();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void enterHome() {
