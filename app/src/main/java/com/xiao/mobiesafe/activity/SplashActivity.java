@@ -42,6 +42,7 @@ public class SplashActivity extends AppCompatActivity {
     private String mDes;
     private String mDownloadUrl;
 
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
