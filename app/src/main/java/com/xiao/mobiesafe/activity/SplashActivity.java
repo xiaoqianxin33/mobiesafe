@@ -92,10 +92,9 @@ public class SplashActivity extends AppCompatActivity {
         spf = getSharedPreferences("config", MODE_PRIVATE);
         boolean auto_update = spf.getBoolean("auto_update", true);
         if (auto_update) {
-
             checkVersionCode();
-        }else {
-            mHandler.sendEmptyMessageDelayed(CODE_ENTER_HOME,2000);
+        } else {
+            mHandler.sendEmptyMessageDelayed(CODE_ENTER_HOME, 2000);
         }
     }
 
@@ -204,8 +203,8 @@ public class SplashActivity extends AppCompatActivity {
                     URL url = new URL("http://192.168.56.1:8080/version.json");
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");// 设置请求方法
-                    conn.setConnectTimeout(20000);// 设置连接超时
-                    conn.setReadTimeout(20000);// 设置响应超时, 连接上了,但服务器迟迟不给响应
+                    conn.setConnectTimeout(5000);// 设置连接超时
+                    conn.setReadTimeout(5000);// 设置响应超时, 连接上了,但服务器迟迟不给响应
                     conn.connect();// 连接服务器
 
                     int responseCode = conn.getResponseCode();// 获取响应码
