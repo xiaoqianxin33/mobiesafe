@@ -25,12 +25,14 @@ public class Guird4Activity extends AppCompatActivity {
         startActivity(new Intent(this, PrevetionActivity.class));
         finish();
         sconfig.edit().putBoolean("gurid", true).commit();
+        overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
 
     }
 
     public void previous(View view) {
         startActivity(new Intent(this, Guird3Activity.class));
         finish();
+        overridePendingTransition(R.anim.tran_previous_in, R.anim.tran_previous_out);
 
     }
 }

@@ -19,5 +19,7 @@ public class Guird1Activity extends AppCompatActivity {
     public void next(View view) {
         startActivity(new Intent(this, Guird2Activity.class));
         finish();
+        overridePendingTransition(R.anim.tran_in,R.anim.tran_out);
     }
+
 }
