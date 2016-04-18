@@ -3,6 +3,7 @@ package com.xiao.mobiesafe.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -80,14 +81,22 @@ public class SplashActivity extends AppCompatActivity {
 
 
     };
+    private SharedPreferences spf;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         tvVersion = (TextView) findViewById(R.id.tv_version);
         tvVersion.setText("版本号：" + getVersionName());
-        tvProgress= (TextView) findViewById(R.id.tv_pro);
-        checkVersionCode();
+        tvProgress = (TextView) findViewById(R.id.tv_pro);
+        spf = getSharedPreferences("config", MODE_PRIVATE);
+        boolean auto_update = spf.getBoolean("auto_update", true);
+        if (auto_update) {
+
+            checkVersionCode();
+        }else {
+            mHandler.sendEmptyMessageDelayed(CODE_ENTER_HOME,2000);
+        }
     }
 
     private void showUpdateDailog() {
@@ -176,7 +185,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void enterHome() {
-        Intent intent=new Intent(this,MnActivity.class);
+        Intent intent = new Intent(this, MnActivity.class);
         startActivity(intent);
         finish();
 
