@@ -1,9 +1,11 @@
 package com.xiao.mobiesafe.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -29,6 +31,16 @@ public class MnActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mn);
         gridView = (GridView) findViewById(R.id.gv);
         gridView.setAdapter(new MnAdapter());
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 8:
+                        startActivity(new Intent(getApplication(),SettingActivity.class));
+                        break;
+                }
+            }
+        });
 
     }
 
