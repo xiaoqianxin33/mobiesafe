@@ -21,14 +21,16 @@ public class Guird4Activity extends AppCompatActivity {
     }
 
     public void next(View view) {
-        startActivity(new Intent(this, Guird3Activity.class));
-        finish();
 
-    }
-
-    private void previous(View view) {
         startActivity(new Intent(this, PrevetionActivity.class));
         finish();
         sconfig.edit().putBoolean("gurid", true).commit();
+
+    }
+
+    public void previous(View view) {
+        startActivity(new Intent(this, Guird3Activity.class));
+        finish();
+
     }
 }

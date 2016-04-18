@@ -1,17 +1,24 @@
 package com.xiao.mobiesafe.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xiao.mobiesafe.R;
+import com.xiao.mobiesafe.utils.MD5Utils;
 
 public class MnActivity extends AppCompatActivity {
 
@@ -24,24 +31,119 @@ public class MnActivity extends AppCompatActivity {
             R.drawable.home_taskmanager, R.drawable.home_netmanager,
             R.drawable.home_trojan, R.drawable.home_sysoptimize,
             R.drawable.home_tools, R.drawable.home_settings};
+    private SharedPreferences config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mn);
+        config = getSharedPreferences("config", MODE_PRIVATE);
         gridView = (GridView) findViewById(R.id.gv);
         gridView.setAdapter(new MnAdapter());
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 8:
-                        startActivity(new Intent(getApplication(),SettingActivity.class));
+                        startActivity(new Intent(getApplication(), SettingActivity.class));
                         break;
                     case 0:
-                        startActivity(new Intent(getApplication(),PrevetionActivity.class));
+                        showPasswordDialog();
                         break;
                 }
+            }
+        });
+
+    }
+
+    private void showPasswordDialog() {
+        String password = config.getString("password", null);
+        if (!TextUtils.isEmpty(password)) {
+            showPasswordInputDialog();
+        } else {
+            showPasswordSetDailog();
+        }
+
+    }
+
+    private void showPasswordSetDailog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog alertDialog = builder.create();
+
+        View view = View.inflate(this, R.layout.dailog_set_password, null);
+        alertDialog.setView(view, 0, 0, 0, 0);
+        final EditText etPassword = (EditText) view
+                .findViewById(R.id.et_password);
+        final EditText etPasswordConfirm = (EditText) view
+                .findViewById(R.id.et_password_confirm);
+
+        Button btnOK = (Button) view.findViewById(R.id.btn_ok);
+        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+        alertDialog.show();
+
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String password = etPassword.getText().toString();
+                String confirmPassword = etPasswordConfirm.getText().toString();
+                if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(confirmPassword)) {
+                    if (password.equals(confirmPassword)) {
+                        config.edit().putString("password", MD5Utils.encode(password)).commit();
+                        startActivity(new Intent(getApplication(), PrevetionActivity.class));
+                        alertDialog.dismiss();
+                    } else {
+                        Toast.makeText(MnActivity.this, "两次密码不一致", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MnActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+    }
+
+    private void showPasswordInputDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog alertDialog = builder.create();
+
+        View view = View.inflate(this, R.layout.dailog_input_password, null);
+        alertDialog.setView(view, 0, 0, 0, 0);
+        final EditText etPassword = (EditText) view
+                .findViewById(R.id.et_password);
+
+        Button btnOK = (Button) view.findViewById(R.id.btn_ok);
+        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+        final String password = config.getString("password", null);
+        alertDialog.show();
+
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String sPassword = etPassword.getText().toString();
+                if (!TextUtils.isEmpty(sPassword) ) {
+                    if (MD5Utils.encode(sPassword).equals(password)) {
+                        startActivity(new Intent(getApplication(), PrevetionActivity.class));
+                        alertDialog.dismiss();
+                    } else {
+                        Toast.makeText(MnActivity.this, "两次密码不一致", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MnActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
             }
         });
 

@@ -22,7 +22,7 @@ public class Guird2Activity extends AppCompatActivity {
 
     }
 
-    private void previous(View view) {
+    public void previous(View view) {
         startActivity(new Intent(this, Guird1Activity.class));
         finish();
     }

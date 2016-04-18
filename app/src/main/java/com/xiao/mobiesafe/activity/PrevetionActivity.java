@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.xiao.mobiesafe.R;
 
@@ -16,12 +17,16 @@ public class PrevetionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
         boolean gurid = sharedPreferences.getBoolean("gurid", false);
-        if(gurid){
-            startActivity(new Intent(this,Guird1Activity.class));
+        if(!gurid){
+            startActivity(new Intent(this, Guird1Activity.class));
             finish();
         }else{
             setContentView(R.layout.activity_prevetion);
-
         }
+    }
+
+    public void reEnter(View view){
+        startActivity(new Intent(this,Guird1Activity.class));
+        finish();
     }
 }
