@@ -38,6 +38,9 @@ public class MnActivity extends AppCompatActivity {
                     case 8:
                         startActivity(new Intent(getApplication(),SettingActivity.class));
                         break;
+                    case 0:
+                        startActivity(new Intent(getApplication(),PrevetionActivity.class));
+                        break;
                 }
             }
         });

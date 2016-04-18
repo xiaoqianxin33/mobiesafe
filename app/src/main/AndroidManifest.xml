@@ -22,7 +22,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MnActivity" />
-        <activity android:name=".activity.SettingActivity"></activity>
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.PrevetionActivity" />
+        <activity android:name=".activity.Guird1Activity" />
+        <activity android:name=".activity.Guird2Activity" />
+        <activity android:name=".activity.Guird3Activity" />
+        <activity android:name=".activity.Guird4Activity" />
+
     </application>
 
 </manifest>
