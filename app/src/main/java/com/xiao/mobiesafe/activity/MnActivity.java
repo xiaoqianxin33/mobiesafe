@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.xiao.mobiesafe.R;
 import com.xiao.mobiesafe.utils.MD5Utils;
 
+import butterknife.Bind;
+
 public class MnActivity extends AppCompatActivity {
 
     private GridView gridView;
