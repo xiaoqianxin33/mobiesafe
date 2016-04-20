@@ -28,7 +28,6 @@ public class BootReceiver extends BroadcastReceiver {
                     smsManager.sendTextMessage(phone, null, "sim card changed!", null, null);
                 }
             }
-            throw new UnsupportedOperationException("Not yet implemented");
         }
     }
 }
