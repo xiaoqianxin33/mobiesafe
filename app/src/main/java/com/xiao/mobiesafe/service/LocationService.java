@@ -1,4 +1,4 @@
-package com.xiao.mobiesafe.serice;
+package com.xiao.mobiesafe.service;
 
 import android.app.Service;
 import android.content.Intent;

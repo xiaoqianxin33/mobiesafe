@@ -10,7 +10,7 @@ import android.media.MediaPlayer;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 
-import com.xiao.mobiesafe.serice.LocationService;
+import com.xiao.mobiesafe.service.LocationService;
 import com.xiao.mobiesafe.R;
 
 public class SmsReceiver extends BroadcastReceiver {
