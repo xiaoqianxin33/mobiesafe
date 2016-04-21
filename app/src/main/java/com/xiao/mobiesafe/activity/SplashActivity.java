@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -86,10 +87,13 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         tvVersion = (TextView) findViewById(R.id.tv_version);
         tvVersion.setText("版本号：" + getVersionName());
         tvProgress = (TextView) findViewById(R.id.tv_pro);
         spf = getSharedPreferences("config", MODE_PRIVATE);
+
+        copyDB("address.db");
         boolean auto_update = spf.getBoolean("auto_update", true);
         if (auto_update) {
             checkVersionCode();
@@ -294,5 +298,34 @@ public class SplashActivity extends AppCompatActivity {
         return "";
     }
 
+    private void copyDB(String dbName) {
+        File destFile = new File(getFilesDir(), dbName);
+        if (destFile.exists()) {
+            return;
+        }
+        InputStream in = null;
+        FileOutputStream out = null;
+        try {
+            in = this.getClass().getClassLoader().getResourceAsStream("assets/" + dbName);
+            out = new FileOutputStream(destFile);
+
+            int len = 0;
+            byte[] buffer = new byte[1024];
+
+            while ((len = in.read(buffer)) != -1) {
+                out.write(buffer, 0, len);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

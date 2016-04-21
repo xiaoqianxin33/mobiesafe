@@ -52,6 +52,9 @@ public class MnActivity extends AppCompatActivity {
                     case 0:
                         showPasswordDialog();
                         break;
+                    case 7:
+                        startActivity(new Intent(getApplication(), AToolsActivity.class));
+                        break;
                 }
             }
         });
