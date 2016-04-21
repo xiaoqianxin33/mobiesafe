@@ -10,6 +10,8 @@ import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -25,6 +27,10 @@ public class AddressService extends Service {
     private MyLisenter lisenter;
     private SharedPreferences config;
     private View view;
+    private int startX;
+    private int startY;
+    private int winWidth;
+    private int winHeight;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -83,16 +89,25 @@ public class AddressService extends Service {
     private void showToast(String address) {
 
         mWM = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        winWidth = mWM.getDefaultDisplay().getWidth();
+        winHeight = mWM.getDefaultDisplay().getHeight();
 
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         params.format = PixelFormat.TRANSLUCENT;
-        params.type = WindowManager.LayoutParams.TYPE_TOAST;
+        params.type = WindowManager.LayoutParams.TYPE_PHONE;
+        params.gravity = Gravity.LEFT + Gravity.TOP;
         params.setTitle("Toast");
+
+        int lastX = config.getInt("lastX", 0);
+        int lastY = config.getInt("lastY", 0);
+
+        params.x = lastX;
+        params.y = lastY;
 
         view = View.inflate(this, R.layout.toast_address, null);
         int[] bgs = new int[]{R.drawable.call_locate_white,
@@ -105,6 +120,61 @@ public class AddressService extends Service {
         TextView tvText = (TextView) view.findViewById(R.id.tv_number);
         tvText.setText(address);
         mWM.addView(view, params);
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startX = (int) event.getRawX();
+                        startY = (int) event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        int endX = (int) event.getRawX();
+                        int endY = (int) event.getRawY();
+
+                        int dx = endX - startX;
+                        int dy = endY - startY;
+
+                        params.x += dx;
+                        params.y += dy;
+
+                        if (params.x < 0) {
+                            params.x = 0;
+                        }
+
+                        if (params.y < 0) {
+                            params.y = 0;
+                        }
+
+                        if (params.x > winWidth - view.getWidth()) {
+                            params.x = winWidth - view.getWidth();
+                        }
+
+                        if (params.y > winHeight - view.getHeight()) {
+                            params.y = winHeight - view.getHeight();
+                        }
+
+
+                        mWM.updateViewLayout(view, params);
+
+                        startX = (int) event.getRawX();
+                        startY = (int) event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        SharedPreferences.Editor edit = config.edit();
+                        edit.putInt("lastX", params.x);
+                        edit.putInt("lastY", params.y);
+                        edit.commit();
+                        break;
+
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
