@@ -55,6 +55,9 @@ public class MnActivity extends AppCompatActivity {
                     case 7:
                         startActivity(new Intent(getApplication(), AToolsActivity.class));
                         break;
+                    case 1:
+                        startActivity(new Intent(getApplication(), TelSmsSafeActivity.class));
+                        break;
                 }
             }
         });
