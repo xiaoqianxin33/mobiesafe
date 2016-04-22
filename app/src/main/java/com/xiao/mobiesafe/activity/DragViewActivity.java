@@ -3,6 +3,7 @@ package com.xiao.mobiesafe.activity;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ public class DragViewActivity extends Activity {
     private int startX;
     private int startY;
     private SharedPreferences config;
+    long[] mHits = new long[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,19 @@ public class DragViewActivity extends Activity {
         layoutParams.topMargin = lastY;
         ivDrag.setLayoutParams(layoutParams);
 
+        ivDrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+                mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+                if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
+                    ivDrag.layout(winWidth / 2 - ivDrag.getWidth() / 2,
+                            ivDrag.getTop(), winWidth / 2 + ivDrag.getWidth()
+                                    / 2, ivDrag.getBottom());
+                }
+            }
+        });
+
         ivDrag.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -78,7 +93,7 @@ public class DragViewActivity extends Activity {
                             break;
                         }
 
-                        if (t > winHeight / 2) {// 上边显示,下边隐藏
+                        if (t > winHeight / 2) {
                             tvTop.setVisibility(View.VISIBLE);
                             tvBottom.setVisibility(View.INVISIBLE);
                         } else {
@@ -98,7 +113,7 @@ public class DragViewActivity extends Activity {
                         edit.commit();
                         break;
                 }
-                return true;
+                return false;
             }
         });
     }

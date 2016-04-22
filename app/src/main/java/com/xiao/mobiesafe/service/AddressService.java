@@ -96,12 +96,12 @@ public class AddressService extends Service {
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         params.format = PixelFormat.TRANSLUCENT;
         params.type = WindowManager.LayoutParams.TYPE_PHONE;
         params.gravity = Gravity.LEFT + Gravity.TOP;
         params.setTitle("Toast");
+
 
         int lastX = config.getInt("lastX", 0);
         int lastY = config.getInt("lastY", 0);
