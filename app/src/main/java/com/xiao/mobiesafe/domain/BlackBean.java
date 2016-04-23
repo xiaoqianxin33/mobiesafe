@@ -20,4 +20,19 @@ public class BlackBean {
     public void setMode(int mode) {
         this.mode = mode;
     }
+
+    @Override
+    public int hashCode() {
+        return phone.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof BlackBean){
+            BlackBean bo=(BlackBean)o;
+            return  bo.phone.equals(this.phone);
+        }
+
+        return false;
+    }
 }
