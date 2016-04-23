@@ -8,9 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -43,6 +40,7 @@ import butterknife.ButterKnife;
 
 public class TelSmsSafeActivity extends AppCompatActivity {
 
+
     @Bind(R.id.bt_telsms_addsafenumber)
     Button btTelsmsAddsafenumber;
     @Bind(R.id.lv_telsms_safenumbers)
@@ -54,6 +52,7 @@ public class TelSmsSafeActivity extends AppCompatActivity {
     BlackDao blackDao;
     protected static final int LOADING = 1;
     protected static final int FINISH = 2;
+    private static final int FIRST = 3;
     List<BlackBean> datas = new ArrayList<>();
 
 
@@ -90,6 +89,16 @@ public class TelSmsSafeActivity extends AppCompatActivity {
                     }
                     break;
 
+                case FIRST:
+                    if (datas.size() == 1) {
+
+                        pbTelsmsLoading.setVisibility(View.GONE);
+
+                        lvTelsmsSafenumbers.setVisibility(View.VISIBLE);
+
+                        tvTelsmsNodata.setVisibility(View.GONE);
+                    }
+                    break;
 
             }
 
@@ -193,7 +202,7 @@ public class TelSmsSafeActivity extends AppCompatActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            ItemView itemView ;
+            ItemView itemView;
             if (convertView == null) {
                 convertView = View.inflate(getApplicationContext(), R.layout.item_telsmssafe_listview, null);
                 itemView = new ItemView();
@@ -380,6 +389,7 @@ public class TelSmsSafeActivity extends AppCompatActivity {
                 lvTelsmsSafenumbers.setAdapter(adapter);
 
                 dialog.dismiss();
+                handler.obtainMessage(FIRST).sendToTarget();
             }
         });
         ab.setView(contView);
@@ -396,7 +406,7 @@ public class TelSmsSafeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(data!=null){
+        if (data != null) {
             String phone = data.getStringExtra("phone");
             addByHand(phone);
         }
