@@ -17,10 +17,8 @@
     <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
 
-    <instrumentation
-        android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="com.xiao.mobiesafe" />
 
     <application
         android:allowBackup="true"
@@ -48,6 +46,9 @@
         <activity android:name=".activity.ContactActivity" />
         <activity android:name=".activity.AToolsActivity" />
         <activity android:name=".activity.AddressActivity" />
+        <activity android:name=".activity.TelSmsSafeActivity" />
+        <activity android:name=".activity.CallLogActivity"/>
+        <activity android:name=".activity.SmsLogActivity"/>
         <activity
             android:name=".activity.DragViewActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -68,12 +69,6 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-
-        <service
-            android:name=".service.LocationService"
-            android:enabled="true"
-            android:exported="true" />
-
         <receiver
             android:name=".receive.AdminReceiver"
             android:description="@string/sample_device_admin_description"
@@ -94,14 +89,11 @@
             android:name=".service.AddressService"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".service.LocationService"
+            android:enabled="true"
+            android:exported="true" />
 
-        <activity android:name=".activity.TelSmsSafeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

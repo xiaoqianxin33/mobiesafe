@@ -2,6 +2,7 @@ package com.xiao.mobiesafe.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -192,7 +193,7 @@ public class TelSmsSafeActivity extends AppCompatActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            ItemView itemView = null;
+            ItemView itemView ;
             if (convertView == null) {
                 convertView = View.inflate(getApplicationContext(), R.layout.item_telsmssafe_listview, null);
                 itemView = new ItemView();
@@ -295,18 +296,16 @@ public class TelSmsSafeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.tv_popup_black_contacts:
-                        System.out.println("从联系人导入");
+                        startActivityForResult(new Intent(TelSmsSafeActivity.this, ContactActivity.class), 2);
                         break;
                     case R.id.tv_popup_black_phonelog:
-                        System.out.println("从电话日志导入");
+                        startActivityForResult(new Intent(TelSmsSafeActivity.this, CallLogActivity.class), 3);
                         break;
                     case R.id.tv_popup_black_shoudong:
-                        addByHand();
-                        System.out.println("手动导入");
-
+                        addByHand("");
                         break;
                     case R.id.tv_popup_black_smslog:
-                        System.out.println("从短信导入");
+                        startActivityForResult(new Intent(TelSmsSafeActivity.this, SmsLogActivity.class), 3);
                         break;
 
                     default:
@@ -328,12 +327,13 @@ public class TelSmsSafeActivity extends AppCompatActivity {
         sa.setDuration(1000);
     }
 
-    private void addByHand() {
+    private void addByHand(String phone) {
 
         final AlertDialog.Builder ab = new AlertDialog.Builder(TelSmsSafeActivity.this);
         View contView = View.inflate(this, R.layout.dailog_addblack_hand, null);
         final EditText et_blackNumber = (EditText) contView
                 .findViewById(R.id.et_addblack_hand_number);
+        et_blackNumber.setText(phone);
 
         final CheckBox cb_sms = (CheckBox) contView
                 .findViewById(R.id.cb_blackhand_smsmode);
@@ -390,5 +390,15 @@ public class TelSmsSafeActivity extends AppCompatActivity {
     private void closePopupWindow() {
         if (pw != null && pw.isShowing())
             pw.dismiss();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(data!=null){
+            String phone = data.getStringExtra("phone");
+            addByHand(phone);
+        }
     }
 }

@@ -45,7 +45,7 @@ public class BlackDao {
     }
 
     public List<BlackBean> getAllDatas() {
-        List<BlackBean> datas = new ArrayList<BlackBean>();
+        List<BlackBean> datas = new ArrayList<>();
         SQLiteDatabase database = blackDB.getReadableDatabase();
         Cursor cursor = database.rawQuery("select " + BlackTable.PHONE + ","
                 + BlackTable.MODE + " from " + BlackTable.BLACKTABLE, null);
@@ -67,10 +67,10 @@ public class BlackDao {
 
     public List<BlackBean> getMoreDatas(int datasNumber, int startIndex) {
 
-        List<BlackBean> datas = new ArrayList<BlackBean>();
+        List<BlackBean> datas = new ArrayList<>();
         SQLiteDatabase database = blackDB.getReadableDatabase();
         Cursor cursor = database.rawQuery("select " + BlackTable.PHONE + ","
-                        + BlackTable.MODE + " from " + BlackTable.BLACKTABLE + "  order by _id desc limit ?,?",
+                        + BlackTable.MODE + " from " + BlackTable.BLACKTABLE + " order by _id desc limit ?,?",
                 new String[]{startIndex + "", datasNumber + ""});
 
         while (cursor.moveToNext()) {

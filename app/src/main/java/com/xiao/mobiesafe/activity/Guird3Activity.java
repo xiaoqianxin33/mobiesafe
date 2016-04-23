@@ -38,7 +38,7 @@ public class Guird3Activity extends BaseGuidActivity {
     @Override
     public void showNextPage() {
         String phone = et_phone.getText().toString();
-        config.edit().putString("safe_phone",phone).commit();
+        config.edit().putString("safe_phone",phone).apply();
         startActivity(new Intent(this, Guird4Activity.class));
         finish();
         overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
