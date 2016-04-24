@@ -17,10 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xiao.mobiesafe.R;
 import com.xiao.mobiesafe.utils.MD5Utils;
-
-import butterknife.Bind;
+import com.xiao.telephony.R;
 
 public class MnActivity extends AppCompatActivity {
 

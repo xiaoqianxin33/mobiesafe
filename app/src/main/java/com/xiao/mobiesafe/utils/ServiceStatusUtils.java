@@ -2,13 +2,9 @@ package com.xiao.mobiesafe.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.widget.Toast;
 
 import java.util.List;
 
-/**
- * Created by xiao on 2016/4/21.
- */
 public class ServiceStatusUtils {
 
     public static boolean isServiceRunning(Context context,String serviceName){

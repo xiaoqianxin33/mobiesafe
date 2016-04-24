@@ -27,9 +27,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xiao.mobiesafe.R;
-import com.xiao.mobiesafe.dao.BlackDao;
 import com.xiao.mobiesafe.domain.BlackBean;
+import com.xiao.telephony.R;
+import com.xiao.mobiesafe.dao.BlackDao;
 import com.xiao.mobiesafe.domain.BlackTable;
 
 import java.util.ArrayList;
@@ -249,6 +249,14 @@ public class TelSmsSafeActivity extends AppCompatActivity {
                             blackDao.delete(bean.getPhone());
 
                             datas.remove(position);
+
+                            if(datas.size()<9){
+                                initDate();
+                            }
+
+                            if(datas.size()==0){
+                                handler.obtainMessage(FINISH).sendToTarget();
+                            }
 
                             adapter.notifyDataSetChanged();
 

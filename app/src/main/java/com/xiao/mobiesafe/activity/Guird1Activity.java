@@ -1,14 +1,9 @@
 package com.xiao.mobiesafe.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Toast;
 
-import com.xiao.mobiesafe.R;
+import com.xiao.telephony.R;
 
 public class Guird1Activity extends BaseGuidActivity {
 

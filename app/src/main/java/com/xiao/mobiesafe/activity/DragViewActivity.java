@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.xiao.mobiesafe.R;
+import com.xiao.telephony.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -110,7 +110,7 @@ public class DragViewActivity extends Activity {
                         SharedPreferences.Editor edit = config.edit();
                         edit.putInt("lastX", ivDrag.getLeft());
                         edit.putInt("lastY", ivDrag.getTop());
-                        edit.commit();
+                        edit.apply();
                         break;
                 }
                 return false;

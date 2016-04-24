@@ -1,4 +1,4 @@
-package com.xiao.mobiesafe;
+package com.xiao.telephony;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
@@ -9,5 +9,6 @@ import android.test.ApplicationTestCase;
 public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);
+        assertEquals(2,3);
     }
 }

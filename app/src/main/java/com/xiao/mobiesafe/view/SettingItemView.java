@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.xiao.mobiesafe.R;
+import com.xiao.telephony.R;
 
 public class SettingItemView extends RelativeLayout {
 

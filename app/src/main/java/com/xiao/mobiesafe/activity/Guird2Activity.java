@@ -7,8 +7,8 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.xiao.mobiesafe.R;
 import com.xiao.mobiesafe.view.SettingView;
+import com.xiao.telephony.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,12 +37,12 @@ public class Guird2Activity extends BaseGuidActivity {
             public void onClick(View v) {
                 if (sivSim.isChecked()) {
                     sivSim.setChecked(false);
-                    sharedPreferences.edit().remove("sim").commit();
+                    sharedPreferences.edit().remove("sim").apply();
                 } else {
                     sivSim.setChecked(true);
                     TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
                     String simSerialNumber = tm.getSimSerialNumber();
-                    sharedPreferences.edit().putString("sim", simSerialNumber).commit();
+                    sharedPreferences.edit().putString("sim", simSerialNumber).apply();
                 }
             }
         });

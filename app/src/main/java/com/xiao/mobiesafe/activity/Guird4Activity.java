@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.xiao.mobiesafe.R;
+import com.xiao.telephony.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

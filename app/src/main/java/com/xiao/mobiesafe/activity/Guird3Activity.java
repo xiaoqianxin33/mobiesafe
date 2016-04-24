@@ -1,15 +1,12 @@
 package com.xiao.mobiesafe.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 
-import com.xiao.mobiesafe.R;
+import com.xiao.telephony.R;
 
 public class Guird3Activity extends BaseGuidActivity {
 
@@ -50,7 +47,7 @@ public class Guird3Activity extends BaseGuidActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode== Activity.RESULT_OK){
+        if(resultCode== RESULT_OK){
             String phone = data.getStringExtra("phone");
             phone = phone.replaceAll("-", "").replaceAll(" ", "");
             et_phone.setText(phone);

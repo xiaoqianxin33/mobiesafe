@@ -5,16 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.xiao.mobiesafe.db.BlackDB;
 import com.xiao.mobiesafe.domain.BlackBean;
 import com.xiao.mobiesafe.domain.BlackTable;
+import com.xiao.mobiesafe.db.BlackDB;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by xiao on 2016/4/23.
- */
 public class BlackDao {
 
     private BlackDB blackDB;
@@ -86,5 +83,24 @@ public class BlackDao {
         database.close();
 
         return datas;
+    }
+
+
+    public int getMode(String number) {
+        int mode;
+        SQLiteDatabase database = blackDB.getReadableDatabase();
+
+        Cursor cursor = database.rawQuery("select " +
+                        BlackTable.MODE + " from " + BlackTable.BLACKTABLE + " where " + BlackTable.PHONE + "=?",
+                new String[]{number});
+
+        if (cursor.moveToNext()) {
+            mode = cursor.getInt(0);
+        } else {
+            mode = 0;
+        }
+        database.close();
+        cursor.close();
+        return mode;
     }
 }

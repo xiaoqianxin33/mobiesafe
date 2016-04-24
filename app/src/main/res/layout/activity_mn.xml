@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MnActivity"
+    tools:context="com.xiao.mobiesafe.activity.MnActivity"
     android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:textSize="20sp"
         android:text="功能列表"
-        android:textSize="20dp"
         android:gravity="center"
         android:background="@android:color/holo_green_light"
         android:textColor="@android:color/black"
