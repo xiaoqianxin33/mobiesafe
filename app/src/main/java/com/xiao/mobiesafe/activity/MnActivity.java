@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiao.mobiesafe.utils.MD5Utils;
-import com.xiao.telephony.R;
+import com.xiao.mobiesafe.R;
 
 public class MnActivity extends AppCompatActivity {
 

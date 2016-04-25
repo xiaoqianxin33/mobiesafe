@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiao.mobiesafe.domain.BlackBean;
-import com.xiao.telephony.R;
+import com.xiao.mobiesafe.R;
 import com.xiao.mobiesafe.dao.BlackDao;
 import com.xiao.mobiesafe.domain.BlackTable;
 

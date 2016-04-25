@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.xiao.mobiesafe.view.SettingView;
-import com.xiao.telephony.R;
+import com.xiao.mobiesafe.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

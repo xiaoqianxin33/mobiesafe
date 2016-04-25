@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.xiao.telephony.R;
+import com.xiao.mobiesafe.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

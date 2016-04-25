@@ -11,7 +11,7 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 
 import com.xiao.mobiesafe.service.LocationService;
-import com.xiao.telephony.R;
+import com.xiao.mobiesafe.R;
 
 public class SmsReceiver extends BroadcastReceiver {
 

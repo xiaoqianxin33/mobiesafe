@@ -6,8 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.xiao.telephony.R;
-
+import com.xiao.mobiesafe.R;
 public class SettingItemView extends RelativeLayout {
 
     private TextView tvTitle;

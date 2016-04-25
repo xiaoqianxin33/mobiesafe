@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.xiao.telephony.R;
+import com.xiao.mobiesafe.R;
 import com.xiao.mobiesafe.dao.AddressDao;
 
 public class AddressService extends Service {

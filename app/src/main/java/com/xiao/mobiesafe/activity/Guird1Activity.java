@@ -3,7 +3,7 @@ package com.xiao.mobiesafe.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.xiao.telephony.R;
+import com.xiao.mobiesafe.R;
 
 public class Guird1Activity extends BaseGuidActivity {
 

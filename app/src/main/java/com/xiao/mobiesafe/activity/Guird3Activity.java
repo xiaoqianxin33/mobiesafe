@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.xiao.telephony.R;
+import com.xiao.mobiesafe.R;
 
 public class Guird3Activity extends BaseGuidActivity {
 

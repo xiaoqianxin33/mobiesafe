@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.xiao.telephony.R;
+import com.xiao.mobiesafe.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
