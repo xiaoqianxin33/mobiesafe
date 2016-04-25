@@ -62,6 +62,7 @@ public class AddressService extends Service {
                     showToast(address);
                     break;
                 case TelephonyManager.CALL_STATE_IDLE:
+                case TelephonyManager.CALL_STATE_OFFHOOK:
                     if (mWM != null && view != null) {
                         mWM.removeView(view);
                         view = null;
@@ -70,7 +71,6 @@ public class AddressService extends Service {
                 default:
                     break;
             }
-
 
         }
     }

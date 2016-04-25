@@ -11,18 +11,33 @@
         android:text="高级工具" />
 
     <TextView
+        style="@style/AtoolStyle"
+        android:onClick="numberAddressQuery"
+        android:text="电话归属地查询" />
+
+    <TextView
+        style="@style/AtoolStyle"
+        android:onClick="backupsms"
+        android:text="短信备份" />
+
+    <ProgressBar
+        android:id="@+id/pb_backupsms"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button"
-        android:clickable="true"
-        android:drawableLeft="@android:drawable/ic_menu_camera"
-        android:drawablePadding="5dp"
-        android:gravity="center_vertical"
-        android:onClick="numberAddressQuery"
-        android:padding="10dp"
-        android:text="电话归属地查询"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:visibility="gone"/>
+
+    <TextView
+        style="@style/AtoolStyle"
+        android:onClick="revertsms"
+        android:text="短信还原" />
+
+    <ProgressBar
+        android:id="@+id/pb_revertsms"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 
 </LinearLayout>
