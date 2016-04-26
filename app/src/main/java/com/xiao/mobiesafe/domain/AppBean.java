@@ -6,10 +6,19 @@ public class AppBean {
 
     private Drawable icon;
     private String appName;
-    private long  size;
+    private long size;
     private boolean isSd;
-
+    private String apkPath;
     private boolean isSystem;
+
+
+    public String getApkPath() {
+        return apkPath;
+    }
+
+    public void setApkPath(String apkPath) {
+        this.apkPath = apkPath;
+    }
 
     public Drawable getIcon() {
         return icon;
@@ -59,6 +68,7 @@ public class AppBean {
         this.packName = packName;
     }
 
-    private String  packName;
+    private String packName;
+
 
 }

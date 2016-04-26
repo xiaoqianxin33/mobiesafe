@@ -1,6 +1,9 @@
 package com.xiao.mobiesafe.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -26,13 +29,19 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.stericson.RootTools.RootTools;
+import com.stericson.RootTools.RootToolsException;
 import com.xiao.mobiesafe.R;
 import com.xiao.mobiesafe.domain.AppBean;
+import com.xiao.mobiesafe.receive.BootReceiver;
 import com.xiao.mobiesafe.utils.AppManagerEngine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -65,12 +74,16 @@ public class AppManageActivity extends AppCompatActivity {
                     lvAppmanagerAppdatas.setVisibility(View.GONE);
                     pbAppmanagerLoading.setVisibility(View.VISIBLE);
                     tvAppmanagerListviewLable.setVisibility(View.GONE);
+                    tvAppmanagerRomsize.setVisibility(View.GONE);
+                    tvAppmanagerSdsize.setVisibility(View.GONE);
                     break;
 
                 case FINISH:
                     lvAppmanagerAppdatas.setVisibility(View.VISIBLE);
                     pbAppmanagerLoading.setVisibility(View.GONE);
                     tvAppmanagerListviewLable.setVisibility(View.VISIBLE);
+                    tvAppmanagerRomsize.setVisibility(View.VISIBLE);
+                    tvAppmanagerSdsize.setVisibility(View.GONE);
 
                     tvAppmanagerSdsize.setText("SD卡可用空间:"
                             + Formatter.formatFileSize(getApplicationContext(),
@@ -95,17 +108,36 @@ public class AppManageActivity extends AppCompatActivity {
     private PopupWindow pw;
     private ScaleAnimation sa;
     private PackageManager pm;
+    private BroadcastReceiver removeReceiver;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+
         initData();
 
         initEvent();
 
         initPopupWindow();
+
+        initRemoveApkReceiver();
+    }
+
+
+    private void initRemoveApkReceiver() {
+
+        removeReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                initData();
+            }
+        };
+
+        IntentFilter filter = new IntentFilter(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addDataScheme("package");
+        registerReceiver(removeReceiver, filter);
     }
 
     private void initPopupWindow() {
@@ -177,15 +209,44 @@ public class AppManageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void removeApk() {
+
+        if (!clickBean.isSystem()) {
+            Intent intent = new Intent("android.intent.action.DELETE");
+            intent.addCategory("android.intent.category.DEFAULT");
+            intent.setData(
+                    Uri.parse("package:" + clickBean.getPackName()));
+            startActivity(intent);
+        } else {
+
+            if (!RootTools.isRootAvailable()) {
+                Toast.makeText(getApplicationContext(), "请先root刷机", 0).show();
+            } else {
+                try {
+                    if (!RootTools.isAccessGiven()) {
+                        Toast.makeText(getApplicationContext(), "请先root刷机", 0).show();
+                        return;
+                    }
+                    RootTools.sendShell("mount -o remount rw /system", 8000);
+                    System.out.println("安装路径:" + clickBean.getApkPath());
+                    RootTools.sendShell("rm -r " + clickBean.getApkPath(), 8000);
+                    RootTools.sendShell("mount -o remount r /system", 8000);
+                } catch (TimeoutException e) {
+                    e.printStackTrace();
+                } catch (RootToolsException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     private void closePopupWindow() {
 
         if (pw != null && pw.isShowing()) {
             pw.dismiss();
         }
-
-    }
-
-    private void removeApk() {
 
     }
 
@@ -238,6 +299,8 @@ public class AppManageActivity extends AppCompatActivity {
                 SystemClock.sleep(1000);
                 List<AppBean> beanList = AppManagerEngine.getAllApks(getApplicationContext());
 
+                systemList.clear();
+                userList.clear();
                 for (AppBean bean : beanList) {
                     if (bean.isSystem()) {
                         systemList.add(bean);
@@ -352,11 +415,7 @@ public class AppManageActivity extends AppCompatActivity {
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
 
-// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
-        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle(getString(R.string.share));
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
         oks.setTitleUrl("http://sharesdk.cn");
         // text是分享文本，所有平台都需要这个字段
         oks.setText("我是分享文本");
@@ -375,5 +434,9 @@ public class AppManageActivity extends AppCompatActivity {
         oks.show(this);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(removeReceiver);
+        super.onDestroy();
+    }
 }

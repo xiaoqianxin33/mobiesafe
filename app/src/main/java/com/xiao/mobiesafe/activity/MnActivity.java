@@ -59,6 +59,9 @@ public class MnActivity extends AppCompatActivity {
                     case 2:
                         startActivity(new Intent(getApplication(),AppManageActivity.class));
                         break;
+                    case 3:
+                        startActivity(new Intent(getApplication(),TaskManageActivity.class));
+                        break;
                 }
             }
         });
