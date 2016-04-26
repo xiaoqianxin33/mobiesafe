@@ -53,7 +53,6 @@ public class AppManageActivity extends AppCompatActivity {
     TextView tvAppmanagerListviewLable;
     @Bind(R.id.pb_appmanager_loading)
     ProgressBar pbAppmanagerLoading;
-    private PackageManager pm;
     private List<AppBean> systemList = new ArrayList<>();
     private List<AppBean> userList = new ArrayList<>();
 
@@ -95,6 +94,7 @@ public class AppManageActivity extends AppCompatActivity {
     private View popupView;
     private PopupWindow pw;
     private ScaleAnimation sa;
+    private PackageManager pm;
 
 
     @Override
@@ -342,6 +342,7 @@ public class AppManageActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         adapter = new MyAdapter();
         lvAppmanagerAppdatas.setAdapter(adapter);
+        pm = getPackageManager();
 
     }
 
