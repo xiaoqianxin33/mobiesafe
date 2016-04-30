@@ -39,5 +39,9 @@
         android:layout_height="wrap_content"
         android:visibility="gone"/>
 
+    <TextView
+        style="@style/AtoolStyle"
+        android:onClick="programLock"
+        android:text="程序锁" />
 
 </LinearLayout>

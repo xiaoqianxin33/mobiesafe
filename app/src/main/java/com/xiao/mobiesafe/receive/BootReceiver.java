@@ -18,7 +18,7 @@ public class BootReceiver extends BroadcastReceiver {
         boolean protect = config.getBoolean("protect", false);
         if (protect) {
             config = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-            String sim = config.getString("sim", null);
+            String sim = config.getString("sim", "");
             if (!TextUtils.isEmpty(sim)) {
                 TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
                 String currentNum = tm.getSimSerialNumber();

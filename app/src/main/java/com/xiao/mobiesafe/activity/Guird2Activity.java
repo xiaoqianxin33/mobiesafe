@@ -25,7 +25,7 @@ public class Guird2Activity extends BaseGuidActivity {
         setContentView(R.layout.activity_guird2);
         ButterKnife.bind(this);
         sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
-        String sim = sharedPreferences.getString("sim", null);
+        String sim = sharedPreferences.getString("sim", "");
         if (!TextUtils.isEmpty(sim)) {
             sivSim.setChecked(true);
         } else {

@@ -32,10 +32,14 @@ public class AToolsActivity extends AppCompatActivity {
     }
 
     public void backupsms(View view) {
-        SmsEngine.backupSms(this,pbBackupsms);
+        SmsEngine.backupSms(this, pbBackupsms);
     }
 
-    public void revertsms(View view){
-        SmsEngine.smsResumnJson(this,pbRevertsms);
+    public void revertsms(View view) {
+        SmsEngine.smsResumnJson(this, pbRevertsms);
+    }
+
+    public void programLock(View view) {
+        startActivity(new Intent(this, AppLockActivity.class));
     }
 }

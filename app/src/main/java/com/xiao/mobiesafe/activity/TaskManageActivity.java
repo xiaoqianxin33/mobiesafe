@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
 import android.view.View;
@@ -73,7 +72,6 @@ public class TaskManageActivity extends AppCompatActivity {
                     tvTaskmanageRunningapk.setVisibility(View.VISIBLE);
                     setTileMessage();
 
-
                     adapt.notifyDataSetChanged();
                     break;
 
@@ -108,11 +106,10 @@ public class TaskManageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         config = getSharedPreferences("config", MODE_PRIVATE);
-        initView();
 
-        initData();
 
-        initEvent();
+        setContentView(R.layout.activity_task_manage);
+        ButterKnife.bind(this);
     }
 
     private void initEvent() {
@@ -154,17 +151,15 @@ public class TaskManageActivity extends AppCompatActivity {
 
                 availMemSize = TaskManageEnige.getAvailMemSize(getApplicationContext());
                 totalMemSize = TaskManageEnige.getTotalMemSize(getApplicationContext());
-
                 handler.obtainMessage(FINISH).sendToTarget();
-
             }
         }.start();
+
+
     }
 
     private void initView() {
 
-        setContentView(R.layout.activity_task_manage);
-        ButterKnife.bind(this);
 
         adapt = new MyAdapt();
         lvTaskmanageTaskdatas.setAdapter(adapt);
@@ -266,6 +261,8 @@ public class TaskManageActivity extends AppCompatActivity {
 
                 if (bean.getPackName().equals(getPackageName())) {
                     viewHolder.cb_item_taskmanage_check.setVisibility(View.GONE);
+                } else {
+                    viewHolder.cb_item_taskmanage_check.setVisibility(View.VISIBLE);
                 }
 
                 return convertView;
@@ -313,7 +310,7 @@ public class TaskManageActivity extends AppCompatActivity {
         }
 
         Toast.makeText(getApplicationContext(), "清理了" + clearNum +
-                "个进程，释放了" + Formatter.formatFileSize(getApplicationContext(), clearMem), 1).show();
+                "个进程，释放了" + Formatter.formatFileSize(getApplicationContext(), clearMem), Toast.LENGTH_LONG).show();
 
         availMemSize += clearMem;
         setTileMessage();
@@ -361,6 +358,11 @@ public class TaskManageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         initData();
+
+        initView();
+
+        initEvent();
     }
 }
