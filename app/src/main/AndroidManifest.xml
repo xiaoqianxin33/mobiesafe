@@ -152,7 +152,16 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.AppLockActivity"></activity>
+        <activity android:name=".activity.AppLockActivity" />
+
+        <service
+            android:name=".service.WatchDogService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".activity.WatchDogPasswordActivity"
+            android:launchMode="singleInstance"></activity>
     </application>
 
 </manifest>
