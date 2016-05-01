@@ -161,7 +161,8 @@
 
         <activity
             android:name=".activity.WatchDogPasswordActivity"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleInstance" />
+        <activity android:name=".activity.ConnectivityActivity"></activity>
     </application>
 
 </manifest>

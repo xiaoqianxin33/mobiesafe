@@ -169,7 +169,7 @@ public class TaskManageActivity extends AppCompatActivity {
     }
 
 
-    class MyAdapt extends BaseAdapter {
+    private class MyAdapt extends BaseAdapter {
 
         @Override
         public int getCount() {

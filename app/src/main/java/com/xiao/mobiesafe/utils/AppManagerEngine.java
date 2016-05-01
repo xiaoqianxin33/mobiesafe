@@ -54,6 +54,8 @@ public class AppManagerEngine {
 
             appBean.setApkPath(packageInfo.applicationInfo.sourceDir);
 
+            appBean.setUid(packageInfo.applicationInfo.uid);
+
             list.add(appBean);
         }
         return list;

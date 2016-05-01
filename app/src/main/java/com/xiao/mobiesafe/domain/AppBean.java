@@ -10,7 +10,15 @@ public class AppBean {
     private boolean isSd;
     private String apkPath;
     private boolean isSystem;
+    private int uid;
 
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
 
     public String getApkPath() {
         return apkPath;
