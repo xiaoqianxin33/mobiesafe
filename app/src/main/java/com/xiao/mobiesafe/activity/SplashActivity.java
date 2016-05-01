@@ -94,6 +94,7 @@ public class SplashActivity extends AppCompatActivity {
         spf = getSharedPreferences("config", MODE_PRIVATE);
 
         copyDB("address.db");
+        copyDB("antivirus.db");
         boolean auto_update = spf.getBoolean("auto_update", true);
         if (auto_update) {
             checkVersionCode();

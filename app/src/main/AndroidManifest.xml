@@ -34,6 +34,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
 
     <application
         android:allowBackup="true"
@@ -162,7 +163,8 @@
         <activity
             android:name=".activity.WatchDogPasswordActivity"
             android:launchMode="singleInstance" />
-        <activity android:name=".activity.ConnectivityActivity"></activity>
+        <activity android:name=".activity.ConnectivityActivity" />
+        <activity android:name=".activity.KillVirusActivity"></activity>
     </application>
 
 </manifest>

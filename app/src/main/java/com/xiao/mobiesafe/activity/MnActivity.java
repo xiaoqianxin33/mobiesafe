@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xiao.mobiesafe.utils.MD5Utils;
 import com.xiao.mobiesafe.R;
+import com.xiao.mobiesafe.utils.MD5Utils;
 
 public class MnActivity extends AppCompatActivity {
 
@@ -64,6 +64,9 @@ public class MnActivity extends AppCompatActivity {
                         break;
                     case 4:
                         startActivity(new Intent(getApplication(),ConnectivityActivity.class));
+                        break;
+                    case 5:
+                        startActivity(new Intent(getApplication(),KillVirusActivity.class));
                         break;
                 }
             }
